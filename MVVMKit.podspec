@@ -8,13 +8,13 @@ MVVM Architecture Framework
 
   spec.homepage     = "https://github.com/IsaAliev/"
 
-  # spec.license      = { :type => "MIT", :file => "LICENSE" }
+  spec.license      = { :type => "MIT", :file => "LICENSE" }
 
   spec.author       = { "IsaAliev" => "isaaliev12@gmail.com" }
 
   spec.platform     = :ios, "11.2"
 
-  spec.source       = { :path => "/Users/isaaliev/myLibs/MVVMKit" }
+  spec.source       = { :git => "https://github.com/IsaAliev/MVVMKit.git", :tag => spec.version }
 
   spec.source_files  = "MVVMKit/**/*.{swift}"
 
