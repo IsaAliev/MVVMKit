@@ -1,0 +1,47 @@
+PODS:
+  - Bond (7.8.1):
+    - Differ (~> 1.4)
+    - ReactiveKit (~> 3.14)
+  - Differ (1.4.5)
+  - Differentiator (5.0.0)
+  - ReactiveKit (3.17.4)
+  - RxCocoa (6.0.0):
+    - RxRelay (= 6.0.0)
+    - RxSwift (= 6.0.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.0.0):
+    - RxSwift (= 6.0.0)
+  - RxSwift (6.0.0)
+
+DEPENDENCIES:
+  - Bond
+  - RxDataSources
+  - RxSwift
+
+SPEC REPOS:
+  trunk:
+    - Bond
+    - Differ
+    - Differentiator
+    - ReactiveKit
+    - RxCocoa
+    - RxDataSources
+    - RxRelay
+    - RxSwift
+
+SPEC CHECKSUMS:
+  Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
+  Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  ReactiveKit: f9f9e079efa39312c597bf1508ef4810d111ce76
+  RxCocoa: 3f79328fafa3645b34600f37c31e64c73ae3a80e
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxRelay: 8d593be109c06ea850df027351beba614b012ffb
+  RxSwift: c14e798c59b9f6e9a2df8fd235602e85cc044295
+
+PODFILE CHECKSUM: 13f6d65ab9c73949458fcb955e7cf8300caee8d2
+
+COCOAPODS: 1.10.0
