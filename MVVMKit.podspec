@@ -24,6 +24,7 @@ MVVM Architecture Framework
 
 	spec.subspec 'RxSwift' do |sp|
 		sp.dependency "RxSwift"
+    sp.dependency "RxDataSources"
   	sp.source_files = 'MVVMKit/*.{swift}', 'MVVMKit/Rx/*.{swift}'
 	end
 

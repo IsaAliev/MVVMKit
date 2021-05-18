@@ -27,7 +27,8 @@ public extension BondDataSourceRepresentableView {
     func configureDataSource(
         for collectionView: UICollectionView,
         withCellProcessors cellProcessors: [CellProcessor] = [],
-        andSupplementaryViewProcessors supplementariesProcessors: [SupplementaryViewProcessor] = []
+        andSupplementaryViewProcessors supplementariesProcessors: [SupplementaryViewProcessor] = [],
+        configuration: ((CollectionBinder<SectionedArrayChangeset>) -> Void)? = nil
     ) {
         collectionView.dataSource = nil
         
@@ -35,13 +36,17 @@ public extension BondDataSourceRepresentableView {
         
         manager.install(on: collectionView)
         
+        let binder = CollectionBinder<SectionedArrayChangeset>(
+            depsManager: manager,
+            cellProcessors: cellProcessors,
+            supplementaryViewProcessors: supplementariesProcessors
+        )
+        
+        configuration?(binder)
+        
         dataProvider.items.bind(
             to: collectionView,
-            using: CollectionBinder(
-                depsManager: manager,
-                cellProcessors: cellProcessors,
-                supplementaryViewProcessors: supplementariesProcessors
-            )
+            using: binder
         ).dispose(in: bag)
     }
     

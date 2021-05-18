@@ -16,13 +16,16 @@ public protocol SupplementaryViewProcessor {
     func processSupplementaryView(_ view: UICollectionReusableView, at path: IndexPath)
 }
 
-public class CollectionBinder<ChangeSet: SectionedDataSourceChangeset>:
+open class CollectionBinder<ChangeSet: SectionedDataSourceChangeset>:
     CollectionViewBinderDataSource<ChangeSet>
 where ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemViewModel>
 {
     private let cellProcessors: [CellProcessor]
     private let supplementaryViewProcessors: [SupplementaryViewProcessor]
     private let depsManager: CollectionItemsViewModelDependencyManager
+    public var isMuted: Bool = false
+    public var moveItemFromTo: ((UICollectionView, IndexPath, IndexPath) -> Void)?
+    public var canMoveItemAt: ((UICollectionView, IndexPath) -> Bool)?
     
     public init(
         depsManager: CollectionItemsViewModelDependencyManager,
@@ -82,5 +85,28 @@ where ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemVie
         supplementaryViewProcessors.forEach({ $0.processSupplementaryView(view, at: indexPath) })
         
         return view
+    }
+    
+    @objc(collectionView:canMoveItemAtIndexPath:)
+    func collectionView(
+        _ collectionView: UICollectionView,
+        canMoveItemAt indexPath: IndexPath
+    ) -> Bool {
+        canMoveItemAt?(collectionView, indexPath) ?? false
+    }
+    
+    @objc(collectionView:moveItemAtIndexPath:toIndexPath:)
+    func collectionView(
+        _ collectionView: UICollectionView,
+        moveItemAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        moveItemFromTo?(collectionView, sourceIndexPath, destinationIndexPath)
+    }
+    
+    open override func applyChangeset(_ changeset: ChangeSet) {
+        guard !isMuted else { return }
+        
+        super.applyChangeset(changeset)
     }
 }

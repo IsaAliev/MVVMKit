@@ -1,15 +1,15 @@
 //
-//  ContainerTableCell.swift
-//  Daily
+//  SupplementaryContainer.swift
+//  MVVMKit
 //
-//  Created by Isa Aliev on 11.04.2021.
+//  Created by Isa Aliev on 03.05.2021.
 //
 
 import SnapKit
 import UIKit
 
-public class ContainerTableCell<T: UIView & ViewRepresentable>:
-    UITableViewCell,
+public class SupplementaryContainer<T: UIView & ViewRepresentable>:
+    UICollectionReusableView,
     ViewRepresentable,
     BoundingWidthAdoptable
 {
@@ -25,8 +25,8 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
     
     public var model: NotAModel!
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         setupViews()
     }
@@ -43,7 +43,7 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
     }
     
     private func setupViews() {
-        contentView.addSubview(content)
+        addSubview(content)
         
         content.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -57,22 +57,5 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
         super.prepareForReuse()
         
         (content as? ReusableView)?.prepareForReuse()
-    }
-}
-
-extension ContainerTableCell: ContentConstraintsConfigurable {
-    public func makeContentPinToEdges() {
-        content.snp.remakeConstraints { make in make.edges.equalToSuperview() }
-    }
-    
-    public func makeContentCenterByY() {
-        content.snp.remakeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-    }
-    
-    public func makeConstraints(_ configurator: (ConstraintMaker) -> Void) {
-        contentView.snp.remakeConstraints(configurator)
     }
 }

@@ -24,13 +24,13 @@
 		431B587F25B4946600052AA6 /* ViewDependecy+Installation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B587E25B4946600052AA6 /* ViewDependecy+Installation.swift */; };
 		431B588325B494EA00052AA6 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B588225B494EA00052AA6 /* Command.swift */; };
 		431B588725B4951700052AA6 /* BlockActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B588625B4951700052AA6 /* BlockActionCommand.swift */; };
-		431B588C25B4952800052AA6 /* SectionedCollectionBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B588925B4952800052AA6 /* SectionedCollectionBinder.swift */; };
 		431B588D25B4952800052AA6 /* TableBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B588A25B4952800052AA6 /* TableBinder.swift */; };
 		431B588E25B4952800052AA6 /* CollectionBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B588B25B4952800052AA6 /* CollectionBinder.swift */; };
 		431B589125B49A0900052AA6 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B589025B49A0900052AA6 /* FlowCoordinator.swift */; };
 		431B589425B49A2800052AA6 /* ViewModelResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B589325B49A2800052AA6 /* ViewModelResponder.swift */; };
 		431B589725B49A3F00052AA6 /* SimpleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B589625B49A3F00052AA6 /* SimpleFlowCoordinator.swift */; };
 		431B589A25B49A9400052AA6 /* RxFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B589925B49A9400052AA6 /* RxFlowCoordinator.swift */; };
+		43B844A32640131B00004406 /* SupplementaryContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B844A22640131B00004406 /* SupplementaryContainer.swift */; };
 		5223CBD8BDDD3B200EAC3D7F /* Pods_MVVMKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2CB2CBAFB2128739B0203 /* Pods_MVVMKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,13 +59,13 @@
 		431B587E25B4946600052AA6 /* ViewDependecy+Installation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewDependecy+Installation.swift"; sourceTree = "<group>"; };
 		431B588225B494EA00052AA6 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		431B588625B4951700052AA6 /* BlockActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockActionCommand.swift; sourceTree = "<group>"; };
-		431B588925B4952800052AA6 /* SectionedCollectionBinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedCollectionBinder.swift; sourceTree = "<group>"; };
 		431B588A25B4952800052AA6 /* TableBinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableBinder.swift; sourceTree = "<group>"; };
 		431B588B25B4952800052AA6 /* CollectionBinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionBinder.swift; sourceTree = "<group>"; };
 		431B589025B49A0900052AA6 /* FlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
 		431B589325B49A2800052AA6 /* ViewModelResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelResponder.swift; sourceTree = "<group>"; };
 		431B589625B49A3F00052AA6 /* SimpleFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleFlowCoordinator.swift; sourceTree = "<group>"; };
 		431B589925B49A9400052AA6 /* RxFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFlowCoordinator.swift; sourceTree = "<group>"; };
+		43B844A22640131B00004406 /* SupplementaryContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryContainer.swift; sourceTree = "<group>"; };
 		52D2CB2CBAFB2128739B0203 /* Pods_MVVMKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACED407C47775B61DE1E8D39 /* Pods-MVVMKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMKit.release.xcconfig"; path = "Target Support Files/Pods-MVVMKit/Pods-MVVMKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +117,7 @@
 				431B584C25B491AC00052AA6 /* Rx */,
 				431B57F625B48FB000052AA6 /* MVVMKit.h */,
 				431B57F725B48FB000052AA6 /* Info.plist */,
+				43B844A22640131B00004406 /* SupplementaryContainer.swift */,
 			);
 			path = MVVMKit;
 			sourceTree = "<group>";
@@ -152,7 +153,6 @@
 				431B589625B49A3F00052AA6 /* SimpleFlowCoordinator.swift */,
 				431B589025B49A0900052AA6 /* FlowCoordinator.swift */,
 				431B588B25B4952800052AA6 /* CollectionBinder.swift */,
-				431B588925B4952800052AA6 /* SectionedCollectionBinder.swift */,
 				431B588A25B4952800052AA6 /* TableBinder.swift */,
 				431B588625B4951700052AA6 /* BlockActionCommand.swift */,
 				431B588225B494EA00052AA6 /* Command.swift */,
@@ -279,13 +279,13 @@
 				431B589A25B49A9400052AA6 /* RxFlowCoordinator.swift in Sources */,
 				431B585425B492BE00052AA6 /* ViewModel.swift in Sources */,
 				431B587925B4941E00052AA6 /* IdentifiableCollectionItemViewModel.swift in Sources */,
+				43B844A32640131B00004406 /* SupplementaryContainer.swift in Sources */,
 				431B586D25B493B200052AA6 /* ClosureCommand.swift in Sources */,
 				431B587325B493E500052AA6 /* StrictCollectionItemsDependencyManager.swift in Sources */,
 				431B589725B49A3F00052AA6 /* SimpleFlowCoordinator.swift in Sources */,
 				431B588D25B4952800052AA6 /* TableBinder.swift in Sources */,
 				431B585125B492B800052AA6 /* ViewDependencyInstallable.swift in Sources */,
 				431B588E25B4952800052AA6 /* CollectionBinder.swift in Sources */,
-				431B588C25B4952800052AA6 /* SectionedCollectionBinder.swift in Sources */,
 				431B587625B493FB00052AA6 /* RxDataSourceRepresentableView.swift in Sources */,
 				431B588325B494EA00052AA6 /* Command.swift in Sources */,
 				431B589125B49A0900052AA6 /* FlowCoordinator.swift in Sources */,

@@ -18,24 +18,34 @@ public protocol ContentConstraintsConfigurable {
     func makeConstraints(_ configurator: (ConstraintMaker) -> Void)
 }
 
-class NotAModel: ViewModel { }
+public protocol ReusableView {
+    func prepareForReuse()
+}
 
-class ContainerCell<T: UIView & ViewRepresentable>:
+public class NotAModel: ViewModel { }
+
+public class ContainerCell<T: UIView & ViewRepresentable>:
     UICollectionViewCell,
     ViewRepresentable,
-    BoundingWidthAdoptable
+    BoundingWidthAdoptable,
+    CollectionItemsViewDependenciesContainable
 {
     private var widthConstraint: Constraint?
-    private lazy var content: T = {
+    public lazy var content: T = {
         T(frame: .zero)
     }()
     
-    var typeErasedViewModel: ViewModel? {
+    public var itemsDependencyManager: CollectionItemsViewModelDependencyManager? {
+        get { (content as? CollectionItemsViewDependenciesContainable)?.itemsDependencyManager }
+        set { (content as? CollectionItemsViewDependenciesContainable)?.itemsDependencyManager = newValue }
+    }
+    
+    public var typeErasedViewModel: ViewModel? {
         set { content.model = (newValue as! T.ViewModelType) }
         get { content.model }
     }
     
-    var model: NotAModel!
+    public var model: NotAModel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,9 +57,9 @@ class ContainerCell<T: UIView & ViewRepresentable>:
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bindWithModel() { }
+    public func bindWithModel() { }
     
-    func adoptBoundingWidth(_ width: CGFloat) {
+    public func adoptBoundingWidth(_ width: CGFloat) {
         widthConstraint?.update(offset: width)
         widthConstraint?.activate()
     }
@@ -64,21 +74,29 @@ class ContainerCell<T: UIView & ViewRepresentable>:
         
         widthConstraint?.deactivate()
     }
+    
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        (content as? ReusableView)?.prepareForReuse()
+    }
+    
+    
 }
 
 extension ContainerCell: ContentConstraintsConfigurable {
-    func makeContentPinToEdges() {
+    public func makeContentPinToEdges() {
         content.snp.remakeConstraints { make in make.edges.equalToSuperview() }
     }
     
-    func makeContentCenterByY() {
+    public func makeContentCenterByY() {
         content.snp.remakeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
     }
     
-    func makeConstraints(_ configurator: (ConstraintMaker) -> Void) {
+    public func makeConstraints(_ configurator: (ConstraintMaker) -> Void) {
         contentView.snp.remakeConstraints(configurator)
     }
 }

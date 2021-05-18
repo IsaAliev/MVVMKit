@@ -58,11 +58,13 @@ public struct ViewDependency: ExpressibleByStringLiteral {
         self.nibName = nibName
     }
     
-    public init(_ classType: AnyClass, identifier: String) {
+    public init(_ classType: AnyClass, identifier: String, kind: String = "") {
         self.classType = classType
         self.identifier = identifier
         self.nibName = ""
+        self.kind = kind
         self.withNib = false
+        isCell = kind.isEmpty
     }
     
     public init(_ cellClassName: String, modelName: String) {
