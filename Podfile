@@ -9,5 +9,6 @@ target 'MVVMKit' do
 pod 'Bond'
 pod 'RxSwift'
 pod 'RxDataSources'
+pod 'SnapKit'
 
 end

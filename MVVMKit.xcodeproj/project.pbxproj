@@ -31,6 +31,8 @@
 		431B589725B49A3F00052AA6 /* SimpleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B589625B49A3F00052AA6 /* SimpleFlowCoordinator.swift */; };
 		431B589A25B49A9400052AA6 /* RxFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431B589925B49A9400052AA6 /* RxFlowCoordinator.swift */; };
 		43B844A32640131B00004406 /* SupplementaryContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B844A22640131B00004406 /* SupplementaryContainer.swift */; };
+		43D4A9102666282000589953 /* ContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4A90E2666282000589953 /* ContainerCell.swift */; };
+		43D4A9112666282000589953 /* ContainerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4A90F2666282000589953 /* ContainerTableCell.swift */; };
 		5223CBD8BDDD3B200EAC3D7F /* Pods_MVVMKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2CB2CBAFB2128739B0203 /* Pods_MVVMKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +68,8 @@
 		431B589625B49A3F00052AA6 /* SimpleFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleFlowCoordinator.swift; sourceTree = "<group>"; };
 		431B589925B49A9400052AA6 /* RxFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxFlowCoordinator.swift; sourceTree = "<group>"; };
 		43B844A22640131B00004406 /* SupplementaryContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryContainer.swift; sourceTree = "<group>"; };
+		43D4A90E2666282000589953 /* ContainerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerCell.swift; sourceTree = "<group>"; };
+		43D4A90F2666282000589953 /* ContainerTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTableCell.swift; sourceTree = "<group>"; };
 		52D2CB2CBAFB2128739B0203 /* Pods_MVVMKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACED407C47775B61DE1E8D39 /* Pods-MVVMKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMKit.release.xcconfig"; path = "Target Support Files/Pods-MVVMKit/Pods-MVVMKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +107,8 @@
 		431B57F525B48FB000052AA6 /* MVVMKit */ = {
 			isa = PBXGroup;
 			children = (
+				43D4A90E2666282000589953 /* ContainerCell.swift */,
+				43D4A90F2666282000589953 /* ContainerTableCell.swift */,
 				431B589325B49A2800052AA6 /* ViewModelResponder.swift */,
 				431B587225B493E500052AA6 /* StrictCollectionItemsDependencyManager.swift */,
 				431B585B25B492F100052AA6 /* Utils.swift */,
@@ -291,11 +297,13 @@
 				431B589125B49A0900052AA6 /* FlowCoordinator.swift in Sources */,
 				431B587025B493C900052AA6 /* RxCommand.swift in Sources */,
 				431B585625B492C200052AA6 /* CollectionItemViewModel.swift in Sources */,
+				43D4A9102666282000589953 /* ContainerCell.swift in Sources */,
 				431B589425B49A2800052AA6 /* ViewModelResponder.swift in Sources */,
 				431B588725B4951700052AA6 /* BlockActionCommand.swift in Sources */,
 				431B585C25B492F100052AA6 /* Utils.swift in Sources */,
 				431B585F25B4931500052AA6 /* CollectionItemsViewModelDependencyManager.swift in Sources */,
 				431B587F25B4946600052AA6 /* ViewDependecy+Installation.swift in Sources */,
+				43D4A9112666282000589953 /* ContainerTableCell.swift in Sources */,
 				431B587C25B4943800052AA6 /* RxDataSource+Default.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

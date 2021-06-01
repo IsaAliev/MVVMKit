@@ -12,6 +12,16 @@ public protocol BoundingWidthAdoptable {
     func adoptBoundingWidth(_ width: CGFloat)
 }
 
+public protocol CellStatesHandling: class {
+	var isHighlighted: Bool { get set }
+	var isSelected: Bool { get set }
+	var selectedBackgroundView: UIView? { get }
+}
+
+public extension CellStatesHandling {
+	var selectedBackgroundView: UIView? { nil }
+}
+
 public protocol ContentConstraintsConfigurable {
     func makeContentPinToEdges()
     func makeContentCenterByY()
@@ -45,6 +55,14 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
         get { content.model }
     }
     
+	public override var isHighlighted: Bool {
+		didSet { (content as? CellStatesHandling)?.isHighlighted = isHighlighted }
+	}
+	
+	public override var isSelected: Bool {
+		didSet { (content as? CellStatesHandling)?.isSelected = isSelected }
+	}
+	
     public var model: NotAModel!
     
     override init(frame: CGRect) {
@@ -65,6 +83,7 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
     }
     
     private func setupViews() {
+		selectedBackgroundView = (content as? CellStatesHandling)?.selectedBackgroundView
         contentView.addSubview(content)
         
         content.snp.makeConstraints { make in
