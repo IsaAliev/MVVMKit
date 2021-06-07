@@ -62,7 +62,7 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
 	}
 	
 	public override var isSelected: Bool {
-		didSet { (content as? CellStatesHandling)?.isSelected = isSelected }
+		didSet { content.subviewAdopting(CellStatesHandling.self)?.isSelected = isSelected }
 	}
 	
     public var model: NotAModel!
