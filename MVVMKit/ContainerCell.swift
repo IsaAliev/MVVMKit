@@ -108,8 +108,8 @@ extension UIView {
 		if self as? P != nil { return self as? P }
 		
 		for subview in subviews {
-			if subview.subviewAdopting(type) != nil {
-				return subview as? P
+			if let v = subview.subviewAdopting(type) {
+				return v
 			}
 		}
 		
