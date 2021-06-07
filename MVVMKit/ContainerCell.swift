@@ -46,8 +46,8 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
     }()
     
     public var itemsDependencyManager: CollectionItemsViewModelDependencyManager? {
-        get { (content as? CollectionItemsViewDependenciesContainable)?.itemsDependencyManager }
-        set { (content as? CollectionItemsViewDependenciesContainable)?.itemsDependencyManager = newValue }
+        get { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
+        set { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
     }
     
     public var typeErasedViewModel: ViewModel? {
@@ -56,7 +56,9 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
     }
     
 	public override var isHighlighted: Bool {
-		didSet { (content as? CellStatesHandling)?.isHighlighted = isHighlighted }
+		didSet {
+			content.subviewAdopting(CellStatesHandling.self)?.isHighlighted = isHighlighted
+		}
 	}
 	
 	public override var isSelected: Bool {
@@ -83,7 +85,7 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
     }
     
     private func setupViews() {
-		selectedBackgroundView = (content as? CellStatesHandling)?.selectedBackgroundView
+		selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
         contentView.addSubview(content)
         
         content.snp.makeConstraints { make in
@@ -97,10 +99,22 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
     public override func prepareForReuse() {
         super.prepareForReuse()
         
-        (content as? ReusableView)?.prepareForReuse()
+		content.subviewAdopting(ReusableView.self)?.prepareForReuse()
     }
-    
-    
+}
+
+extension UIView {
+	func subviewAdopting<P>(_ type: P.Type) -> P? {
+		if self as? P != nil { return self as? P }
+		
+		for subview in subviews {
+			if subview.subviewAdopting(type) != nil {
+				return subview as? P
+			}
+		}
+		
+		return nil
+	}
 }
 
 extension ContainerCell: ContentConstraintsConfigurable {
