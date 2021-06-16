@@ -88,15 +88,18 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
 		selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
         contentView.addSubview(content)
         
-        setupContentConstraints()
+		setupContentConstraints { w in
+			self.widthConstraint = w
+		}
         
         widthConstraint?.deactivate()
     }
 	
-	open func setupContentConstraints() {
+	open func setupContentConstraints(_ usingWidthConstraint: (Constraint) -> Void) {
 		content.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
-			widthConstraint = make.width.equalTo(0.0).constraint
+			let cons = make.width.equalTo(0.0).constraint
+			usingWidthConstraint(cons)
 		}
 	}
     
