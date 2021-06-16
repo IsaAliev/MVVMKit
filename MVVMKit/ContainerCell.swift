@@ -41,7 +41,7 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
     CollectionItemsViewDependenciesContainable
 {
     private var widthConstraint: Constraint?
-    public lazy var content: T = {
+	public lazy var content: T = {
         T(frame: .zero)
     }()
     

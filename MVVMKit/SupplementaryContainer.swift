@@ -14,7 +14,7 @@ open class SupplementaryContainer<T: UIView & ViewRepresentable>:
     BoundingWidthAdoptable
 {
     private var widthConstraint: Constraint?
-    private lazy var content: T = {
+    public lazy var content: T = {
         T(frame: .zero)
     }()
     
