@@ -12,7 +12,7 @@ public protocol BoundingWidthAdoptable {
     func adoptBoundingWidth(_ width: CGFloat)
 }
 
-public protocol CellStatesHandling: class {
+public protocol CellStatesHandling: AnyObject {
 	var isHighlighted: Bool { get set }
 	var isSelected: Bool { get set }
 	var selectedBackgroundView: UIView? { get }
@@ -34,7 +34,7 @@ public protocol ReusableView {
 
 public class NotAModel: ViewModel { }
 
-public class ContainerCell<T: UIView & ViewRepresentable>:
+open class ContainerCell<T: UIView & ViewRepresentable>:
     UICollectionViewCell,
     ViewRepresentable,
     BoundingWidthAdoptable,
@@ -73,7 +73,7 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+	required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -88,13 +88,17 @@ public class ContainerCell<T: UIView & ViewRepresentable>:
 		selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
         contentView.addSubview(content)
         
-        content.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            widthConstraint = make.width.equalTo(0.0).constraint
-        }
+        setupContentConstraints()
         
         widthConstraint?.deactivate()
     }
+	
+	open func setupContentConstraints() {
+		content.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
+			widthConstraint = make.width.equalTo(0.0).constraint
+		}
+	}
     
     public override func prepareForReuse() {
         super.prepareForReuse()

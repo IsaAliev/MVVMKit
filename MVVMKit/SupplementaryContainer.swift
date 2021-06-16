@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-public class SupplementaryContainer<T: UIView & ViewRepresentable>:
+open class SupplementaryContainer<T: UIView & ViewRepresentable>:
     UICollectionReusableView,
     ViewRepresentable,
     BoundingWidthAdoptable
@@ -31,7 +31,7 @@ public class SupplementaryContainer<T: UIView & ViewRepresentable>:
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+	required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -45,14 +45,18 @@ public class SupplementaryContainer<T: UIView & ViewRepresentable>:
     private func setupViews() {
         addSubview(content)
         
-        content.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            widthConstraint = make.width.equalTo(0.0).constraint
-        }
+        setupContentConstraints()
         
         widthConstraint?.deactivate()
     }
     
+	open func setupContentConstraints() {
+		content.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
+			widthConstraint = make.width.equalTo(0.0).constraint
+		}
+	}
+	
     public override func prepareForReuse() {
         super.prepareForReuse()
         
