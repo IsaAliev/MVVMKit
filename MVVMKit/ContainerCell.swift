@@ -54,6 +54,10 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
         set { content.model = (newValue as! T.ViewModelType) }
         get { content.model }
     }
+	
+	open override var isFirstResponder: Bool {
+		content.isFirstResponder
+	}
     
 	public override var isHighlighted: Bool {
 		didSet {
