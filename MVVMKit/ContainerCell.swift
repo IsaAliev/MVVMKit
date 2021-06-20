@@ -12,6 +12,10 @@ public protocol BoundingWidthAdoptable {
     func adoptBoundingWidth(_ width: CGFloat)
 }
 
+public protocol AttributesApplyable {
+	func apply(_ layoutAttributes: UICollectionViewLayoutAttributes)
+}
+
 public protocol CellStatesHandling: AnyObject {
 	var isHighlighted: Bool { get set }
 	var isSelected: Bool { get set }
@@ -112,6 +116,11 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
         
 		content.subviewAdopting(ReusableView.self)?.prepareForReuse()
     }
+	
+	open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+		content.subviewAdopting(AttributesApplyable.self)?
+			.apply(layoutAttributes)
+	}
 }
 
 extension UIView {
