@@ -118,6 +118,8 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
     }
 	
 	open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+		super.apply(layoutAttributes)
+		
 		content.subviewAdopting(AttributesApplyable.self)?
 			.apply(layoutAttributes)
 	}
