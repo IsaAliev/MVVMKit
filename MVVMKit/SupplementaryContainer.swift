@@ -51,6 +51,14 @@ open class SupplementaryContainer<T: UIView & ViewRepresentable>:
         
         widthConstraint?.deactivate()
     }
+	
+	open override func becomeFirstResponder() -> Bool {
+		content.becomeFirstResponder()
+	}
+	
+	open override var isFirstResponder: Bool {
+		content.isFirstResponder
+	}
     
 	open func setupContentConstraints(_ usingWidthConstraint: (Constraint) -> Void) {
 		content.snp.makeConstraints { make in

@@ -91,6 +91,10 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
         widthConstraint?.update(offset: width)
         widthConstraint?.activate()
     }
+	
+	open override func becomeFirstResponder() -> Bool {
+		content.becomeFirstResponder()
+	}
     
     private func setupViews() {
 		selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
