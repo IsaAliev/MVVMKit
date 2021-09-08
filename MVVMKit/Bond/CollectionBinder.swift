@@ -26,7 +26,7 @@ where ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemVie
     public var isMuted: Bool = false
     public var moveItemFromTo: ((UICollectionView, IndexPath, IndexPath) -> Void)?
     public var canMoveItemAt: ((UICollectionView, IndexPath) -> Bool)?
-    
+	
     public init(
         depsManager: CollectionItemsViewModelDependencyManager,
         cellProcessors: [CellProcessor] = [],

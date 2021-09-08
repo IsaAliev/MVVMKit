@@ -12,8 +12,8 @@ public typealias ReactiveSectionedArray = MutableObservableArray2D<CollectionIte
 public typealias SectionedArrayChangeset = TreeChangeset<Array2D<CollectionItemViewModel, CollectionItemViewModel>>
 
 public struct Section {
-    let metadata: CollectionItemViewModel
-    var items = [CollectionItemViewModel]()
+    public let metadata: CollectionItemViewModel
+    public var items = [CollectionItemViewModel]()
     
     public init(
         metadata: CollectionItemViewModel,

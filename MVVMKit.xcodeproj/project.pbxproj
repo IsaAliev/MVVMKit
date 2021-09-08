@@ -33,6 +33,9 @@
 		43B844A32640131B00004406 /* SupplementaryContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B844A22640131B00004406 /* SupplementaryContainer.swift */; };
 		43D4A9102666282000589953 /* ContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4A90E2666282000589953 /* ContainerCell.swift */; };
 		43D4A9112666282000589953 /* ContainerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4A90F2666282000589953 /* ContainerTableCell.swift */; };
+		43EAA17526E8EB10000E9033 /* Observable+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EAA17226E8EB10000E9033 /* Observable+Utils.swift */; };
+		43EAA17626E8EB10000E9033 /* BondDataSourceRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EAA17326E8EB10000E9033 /* BondDataSourceRepresentableView.swift */; };
+		43EAA17726E8EB10000E9033 /* SectionedListContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EAA17426E8EB10000E9033 /* SectionedListContaining.swift */; };
 		5223CBD8BDDD3B200EAC3D7F /* Pods_MVVMKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2CB2CBAFB2128739B0203 /* Pods_MVVMKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +73,9 @@
 		43B844A22640131B00004406 /* SupplementaryContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryContainer.swift; sourceTree = "<group>"; };
 		43D4A90E2666282000589953 /* ContainerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerCell.swift; sourceTree = "<group>"; };
 		43D4A90F2666282000589953 /* ContainerTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTableCell.swift; sourceTree = "<group>"; };
+		43EAA17226E8EB10000E9033 /* Observable+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Utils.swift"; sourceTree = "<group>"; };
+		43EAA17326E8EB10000E9033 /* BondDataSourceRepresentableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BondDataSourceRepresentableView.swift; sourceTree = "<group>"; };
+		43EAA17426E8EB10000E9033 /* SectionedListContaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedListContaining.swift; sourceTree = "<group>"; };
 		52D2CB2CBAFB2128739B0203 /* Pods_MVVMKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACED407C47775B61DE1E8D39 /* Pods-MVVMKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMKit.release.xcconfig"; path = "Target Support Files/Pods-MVVMKit/Pods-MVVMKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +162,9 @@
 		431B584D25B491B300052AA6 /* Bond */ = {
 			isa = PBXGroup;
 			children = (
+				43EAA17326E8EB10000E9033 /* BondDataSourceRepresentableView.swift */,
+				43EAA17226E8EB10000E9033 /* Observable+Utils.swift */,
+				43EAA17426E8EB10000E9033 /* SectionedListContaining.swift */,
 				431B589625B49A3F00052AA6 /* SimpleFlowCoordinator.swift */,
 				431B589025B49A0900052AA6 /* FlowCoordinator.swift */,
 				431B588B25B4952800052AA6 /* CollectionBinder.swift */,
@@ -280,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43EAA17726E8EB10000E9033 /* SectionedListContaining.swift in Sources */,
 				431B584F25B492B300052AA6 /* ViewRepresentable.swift in Sources */,
 				431B585925B492D000052AA6 /* ViewDependency.swift in Sources */,
 				431B589A25B49A9400052AA6 /* RxFlowCoordinator.swift in Sources */,
@@ -298,9 +308,11 @@
 				431B587025B493C900052AA6 /* RxCommand.swift in Sources */,
 				431B585625B492C200052AA6 /* CollectionItemViewModel.swift in Sources */,
 				43D4A9102666282000589953 /* ContainerCell.swift in Sources */,
+				43EAA17526E8EB10000E9033 /* Observable+Utils.swift in Sources */,
 				431B589425B49A2800052AA6 /* ViewModelResponder.swift in Sources */,
 				431B588725B4951700052AA6 /* BlockActionCommand.swift in Sources */,
 				431B585C25B492F100052AA6 /* Utils.swift in Sources */,
+				43EAA17626E8EB10000E9033 /* BondDataSourceRepresentableView.swift in Sources */,
 				431B585F25B4931500052AA6 /* CollectionItemsViewModelDependencyManager.swift in Sources */,
 				431B587F25B4946600052AA6 /* ViewDependecy+Installation.swift in Sources */,
 				43D4A9112666282000589953 /* ContainerTableCell.swift in Sources */,
