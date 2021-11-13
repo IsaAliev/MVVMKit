@@ -6,6 +6,8 @@
 //
 
 import ReactiveKit
+import UIKit
+import MVVMKit_Base
 
 public protocol BondDataSourceRepresentableView: CollectionItemsViewDependenciesContainable {
     var dataProvider: SectionedListContaining! { get }

@@ -7,6 +7,7 @@
 
 import Bond
 import UIKit
+import MVVMKit_Base
 
 public protocol CellProcessor {
     func processCell(_ cell: UIView, at path: IndexPath)

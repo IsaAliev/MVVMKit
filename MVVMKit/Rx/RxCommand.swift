@@ -7,7 +7,7 @@
 
 import RxSwift
 
-public protocol RxCommand: class, ObserverType {
+public protocol RxCommand: AnyObject, ObserverType {
     func execute(with element: Element)
 }
 

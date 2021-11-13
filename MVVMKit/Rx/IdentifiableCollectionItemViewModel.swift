@@ -6,6 +6,7 @@
 //
 
 import RxDataSources
+import MVVMKit_Base
 
 class IdentifiableCollectionItemViewModel: CollectionItemViewModel, IdentifiableType, Equatable {
     var equalityMeasures: [AnyHashable] { [identity] }

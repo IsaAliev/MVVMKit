@@ -7,6 +7,8 @@
 
 import ReactiveKit
 import Bond
+import Foundation
+import MVVMKit_Base
 
 open class SimpleFlowCoordinator<O>: FlowCoordinator {
     public typealias CoordinationOutput = O

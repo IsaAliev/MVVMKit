@@ -7,6 +7,7 @@
 
 import RxDataSources
 import UIKit
+import MVVMKit_Base
 
 typealias SectionData = SectionModel<CollectionItemViewModel, CollectionItemViewModel>
 typealias AnimatableSectionData = AnimatableSectionModel<IdentifiableCollectionItemViewModel, IdentifiableCollectionItemViewModel>
@@ -32,7 +33,7 @@ extension RxCollectionViewSectionedAnimatedDataSource {
                 for: indexPath
             ) as! ViewModelTypeErasedViewRepresentable & UICollectionViewCell
             
-            if var dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
+            if let dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
                dependecyInstallableView.itemsDependencyManager == nil {
                 dependecyInstallableView.itemsDependencyManager = manager
             }
@@ -70,7 +71,7 @@ extension RxCollectionViewSectionedReloadDataSource {
                 let identifier = manager.reuseIdentifier(for: item)
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ViewModelTypeErasedViewRepresentable & UICollectionViewCell
                 
-                if var dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
+                if let dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
                     dependecyInstallableView.itemsDependencyManager == nil {
                     dependecyInstallableView.itemsDependencyManager = manager
                 }

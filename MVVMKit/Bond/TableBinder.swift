@@ -7,6 +7,7 @@
 
 import Bond
 import UIKit
+import MVVMKit_Base
 
 public class TableBinder<ChangeSet: SectionedDataSourceChangeset>:
     TableViewBinderDataSource<ChangeSet>

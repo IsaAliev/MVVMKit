@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ViewModelResponder: class {
+public protocol ViewModelResponder: AnyObject {
     var next: ViewModelResponder? { get set }
     
     func setAsNextResponder(_ responder: ViewModelResponder)

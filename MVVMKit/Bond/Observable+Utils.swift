@@ -6,6 +6,7 @@
 //
 
 import ReactiveKit
+import Foundation
 
 public extension SignalProtocol {
     func nextOnMain(_ observer: @escaping (Element) -> Void) -> Disposable {

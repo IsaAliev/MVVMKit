@@ -5,6 +5,6 @@
 //  Copyright © 2020. All rights reserved.
 //
 
-public protocol CollectionItemsViewDependenciesContainable: class {
+public protocol CollectionItemsViewDependenciesContainable: AnyObject {
     var itemsDependencyManager: CollectionItemsViewModelDependencyManager? { get set }
 }

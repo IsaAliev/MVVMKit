@@ -6,6 +6,8 @@
 //
 
 import RxSwift
+import Foundation
+import MVVMKit_Base
 
 public protocol RxFlowCoordinator: ViewModelResponder {
     associatedtype CoordinationOutput

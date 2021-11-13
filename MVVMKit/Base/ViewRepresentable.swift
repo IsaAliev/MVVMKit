@@ -13,7 +13,7 @@ public protocol ViewRepresentable: ViewModelTypeErasedViewRepresentable {
     func bindWithModel()
 }
 
-public protocol ViewModelTypeErasedViewRepresentable: class {
+public protocol ViewModelTypeErasedViewRepresentable: AnyObject {
     var typeErasedViewModel: ViewModel? { get set }
 }
 
