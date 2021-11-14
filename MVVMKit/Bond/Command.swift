@@ -7,7 +7,7 @@
 
 import ReactiveKit
 
-public protocol Command: class, BindableProtocol {
+public protocol Command: AnyObject, BindableProtocol {
     func execute(with element: Element)
 }
 

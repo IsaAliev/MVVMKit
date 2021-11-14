@@ -53,7 +53,7 @@ where ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemVie
             for: indexPath
         ) as! ViewModelTypeErasedViewRepresentable & UICollectionViewCell
         
-        if var dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
+        if let dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
            dependecyInstallableView.itemsDependencyManager == nil {
             dependecyInstallableView.itemsDependencyManager = depsManager
         }

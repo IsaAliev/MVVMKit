@@ -45,7 +45,7 @@ where
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
             as! ViewModelTypeErasedViewRepresentable & UITableViewCell
         
-        if var dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
+        if let dependecyInstallableView = cell as? CollectionItemsViewDependenciesContainable,
            dependecyInstallableView.itemsDependencyManager == nil {
             dependecyInstallableView.itemsDependencyManager = depsManager
         }
