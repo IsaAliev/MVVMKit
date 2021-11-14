@@ -28,6 +28,13 @@ public extension ViewModelResponder {
             objc_setAssociatedObject(self, &AssociatedKey.kNext, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
     }
+	
+	func createVM(_ creation: () -> ViewModelResponder) -> ViewModelResponder {
+		let vm = creation()
+		vm.setAsNextResponder(self)
+		
+		return vm
+	}
 }
 
 public extension ViewModelResponder {
