@@ -29,7 +29,7 @@ public extension ViewModelResponder {
         }
     }
 	
-	func createVM(_ creation: () -> ViewModelResponder) -> ViewModelResponder {
+	func createVM<T: ViewModel>(_ creation: () -> T) -> T {
 		let vm = creation()
 		vm.setAsNextResponder(self)
 		
