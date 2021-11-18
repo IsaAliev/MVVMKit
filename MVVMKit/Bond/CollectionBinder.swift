@@ -19,7 +19,7 @@ public protocol SupplementaryViewProcessor {
 
 open class CollectionBinder<ChangeSet: SectionedDataSourceChangeset>:
     CollectionViewBinderDataSource<ChangeSet>
-where ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemViewModel>
+where ChangeSet.Collection == Array2D<Section.SectionMeta, CollectionItemViewModel>
 {
     private let cellProcessors: [CellProcessor]
     private let supplementaryViewProcessors: [SupplementaryViewProcessor]
@@ -70,8 +70,15 @@ where ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemVie
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
-        guard let headerModel = changeset?.collection.sections[indexPath.section].metadata else {
+		var model: CollectionItemViewModel?
+		
+		if kind == UICollectionView.elementKindSectionFooter {
+			model = changeset?.collection.sections[indexPath.section].metadata.footer
+		} else if kind == UICollectionView.elementKindSectionHeader {
+			model = changeset?.collection.sections[indexPath.section].metadata.header
+		}
+		
+        guard let headerModel = model else {
             return UICollectionReusableView()
         }
         

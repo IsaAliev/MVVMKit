@@ -9,23 +9,33 @@ import ReactiveKit
 import Bond
 import MVVMKit_Base
 
-public typealias ReactiveSectionedArray = MutableObservableArray2D<CollectionItemViewModel, CollectionItemViewModel>
-public typealias SectionedArrayChangeset = TreeChangeset<Array2D<CollectionItemViewModel, CollectionItemViewModel>>
+public typealias ReactiveSectionedArray = MutableObservableArray2D<Section.SectionMeta, CollectionItemViewModel>
+public typealias SectionedArrayChangeset = TreeChangeset<Array2D<Section.SectionMeta, CollectionItemViewModel>>
 
 public struct Section {
-    public let metadata: CollectionItemViewModel
+	public struct SectionMeta {
+		public let header: CollectionItemViewModel?
+		public let footer: CollectionItemViewModel?
+	}
+	
+	public let meta: SectionMeta
+    public let metadata: CollectionItemViewModel?
     public var items = [CollectionItemViewModel]()
     
     public init(
         metadata: CollectionItemViewModel,
-        items: [CollectionItemViewModel] = [CollectionItemViewModel]()
+        items: [CollectionItemViewModel] = [CollectionItemViewModel](),
+		footer: CollectionItemViewModel? = nil
     ) {
         self.metadata = metadata
         self.items = items
+		self.meta = .init(header: metadata, footer: nil)
     }
     
-    public init(_ metadata: CollectionItemViewModel) {
-        self.metadata = metadata
+    public init(_ meta: SectionMeta, items: [CollectionItemViewModel] = [CollectionItemViewModel]()) {
+        self.meta = meta
+		self.items = items
+		self.metadata = meta.header
     }
 }
 
@@ -36,7 +46,7 @@ public protocol SectionedListContaining {
 public extension SectionedListContaining {
     func setSections(_ sections: [Section]) {
         items.value = SectionedArrayChangeset(
-            collection: .init(sectionsWithItems: sections.map({ ($0.metadata, $0.items) })),
+            collection: .init(sectionsWithItems: sections.map({ ($0.meta, $0.items) })),
             diff: OrderedCollectionDiff()
         )
     }

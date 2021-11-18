@@ -12,7 +12,7 @@ import MVVMKit_Base
 public class TableBinder<ChangeSet: SectionedDataSourceChangeset>:
     TableViewBinderDataSource<ChangeSet>
 where
-    ChangeSet.Collection == Array2D<CollectionItemViewModel, CollectionItemViewModel>
+	ChangeSet.Collection == Array2D<Section.SectionMeta, CollectionItemViewModel>
 {
     private let depsManager: CollectionItemsViewModelDependencyManager
     private let cellProcessors: [CellProcessor]
