@@ -16,6 +16,14 @@ public struct Section {
 	public struct SectionMeta {
 		public let header: CollectionItemViewModel?
 		public let footer: CollectionItemViewModel?
+		
+		public init(
+			header: CollectionItemViewModel? = nil,
+			footer: CollectionItemViewModel? = nil
+		) {
+			self.header = header
+			self.footer = footer
+		}
 	}
 	
 	public let meta: SectionMeta
