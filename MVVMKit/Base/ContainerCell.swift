@@ -54,7 +54,7 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
         set { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
     }
     
-    public var typeErasedViewModel: ViewModel? {
+    open var typeErasedViewModel: ViewModel? {
         set { content.model = (newValue as! T.ViewModelType) }
         get { content.model }
     }
