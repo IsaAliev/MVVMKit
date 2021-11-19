@@ -11,12 +11,18 @@ import UIKit
 open class SupplementaryContainer<T: UIView & ViewRepresentable>:
     UICollectionReusableView,
     ViewRepresentable,
-    BoundingWidthAdoptable
+    BoundingWidthAdoptable,
+	CollectionItemsViewDependenciesContainable
 {
     private var widthConstraint: Constraint?
     public lazy var content: T = {
         T(frame: .zero)
     }()
+	
+	public var itemsDependencyManager: CollectionItemsViewModelDependencyManager? {
+		get { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
+		set { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
+	}
     
     public var typeErasedViewModel: ViewModel? {
         set { content.model = (newValue as! T.ViewModelType) }

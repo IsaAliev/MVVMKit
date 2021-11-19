@@ -89,6 +89,11 @@ where ChangeSet.Collection == Array2D<Section.SectionMeta, CollectionItemViewMod
             for: indexPath
         )
         
+		if let dependecyInstallableView = view as? CollectionItemsViewDependenciesContainable,
+		   dependecyInstallableView.itemsDependencyManager == nil {
+			dependecyInstallableView.itemsDependencyManager = depsManager
+		}
+		
         (view as? ViewModelTypeErasedViewRepresentable)?.typeErasedViewModel = headerModel
         supplementaryViewProcessors.forEach({ $0.processSupplementaryView(view, at: indexPath) })
         
