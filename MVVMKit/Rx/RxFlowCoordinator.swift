@@ -7,7 +7,9 @@
 
 import RxSwift
 import Foundation
+#if canImport(MVVMKit_Base)
 import MVVMKit_Base
+#endif
 
 public protocol RxFlowCoordinator: ViewModelResponder {
     associatedtype CoordinationOutput

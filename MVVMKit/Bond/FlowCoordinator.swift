@@ -8,7 +8,9 @@
 import ReactiveKit
 import Bond
 import Foundation
+#if canImport(MVVMKit_Base)
 import MVVMKit_Base
+#endif
 
 public protocol FlowCoordinator: ViewModelResponder {
     associatedtype CoordinationOutput

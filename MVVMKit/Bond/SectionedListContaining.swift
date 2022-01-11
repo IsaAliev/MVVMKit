@@ -7,7 +7,9 @@
 
 import ReactiveKit
 import Bond
+#if canImport(MVVMKit_Base)
 import MVVMKit_Base
+#endif
 
 public typealias ReactiveSectionedArray = MutableObservableArray2D<Section.SectionMeta, CollectionItemViewModel>
 public typealias SectionedArrayChangeset = TreeChangeset<Array2D<Section.SectionMeta, CollectionItemViewModel>>

@@ -8,7 +8,9 @@
 import UIKit
 import RxSwift
 import RxDataSources
+#if canImport(MVVMKit_Base)
 import MVVMKit_Base
+#endif
 
 class EmptyViewModel: IdentifiableCollectionItemViewModel {
     private let explicitId: String?

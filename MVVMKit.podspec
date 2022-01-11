@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "MVVMKit"
-  spec.version      = "0.0.2"
+  spec.version      = "0.0.9"
   spec.summary      = "MVVM Architecture Framework"
   spec.description  = <<-DESC
 MVVM Architecture Framework

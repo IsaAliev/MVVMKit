@@ -7,7 +7,9 @@
 
 import RxDataSources
 import UIKit
+#if canImport(MVVMKit_Base)
 import MVVMKit_Base
+#endif
 
 typealias SectionData = SectionModel<CollectionItemViewModel, CollectionItemViewModel>
 typealias AnimatableSectionData = AnimatableSectionModel<IdentifiableCollectionItemViewModel, IdentifiableCollectionItemViewModel>
