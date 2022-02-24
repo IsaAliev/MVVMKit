@@ -11,16 +11,22 @@ import UIKit
 public class ContainerTableCell<T: UIView & ViewRepresentable>:
     UITableViewCell,
     ViewRepresentable,
-    BoundingWidthAdoptable
+    BoundingWidthAdoptable,
+    CollectionItemsViewDependenciesContainable
 {
     private var widthConstraint: Constraint?
-    private lazy var content: T = {
+    public lazy var content: T = {
         T(frame: .zero)
     }()
     
     public var typeErasedViewModel: ViewModel? {
         set { content.model = (newValue as! T.ViewModelType) }
         get { content.model }
+    }
+    
+    public var itemsDependencyManager: CollectionItemsViewModelDependencyManager? {
+        get { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
+        set { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
     }
     
     public var model: NotAModel!
