@@ -19,6 +19,20 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
         T(frame: .zero)
     }()
     
+    open override var isFirstResponder: Bool {
+        content.isFirstResponder
+    }
+    
+    public override var isHighlighted: Bool {
+        didSet {
+            content.subviewAdopting(CellStatesHandling.self)?.isHighlighted = isHighlighted
+        }
+    }
+    
+    public override var isSelected: Bool {
+        didSet { content.subviewAdopting(CellStatesHandling.self)?.isSelected = isSelected }
+    }
+    
     public var typeErasedViewModel: ViewModel? {
         set { content.model = (newValue as! T.ViewModelType) }
         get { content.model }
@@ -49,6 +63,7 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
     }
     
     private func setupViews() {
+        selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
         contentView.addSubview(content)
         
         content.snp.makeConstraints { make in
