@@ -27,6 +27,6 @@ open class SimpleFlowCoordinator<O>: FlowCoordinator {
     }
     
     public func setAsNextResponder(_ responder: ViewModelResponder) {
-        next = responder
+        next?.store(responder)
     }
 }

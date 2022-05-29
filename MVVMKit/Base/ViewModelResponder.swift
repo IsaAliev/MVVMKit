@@ -8,8 +8,8 @@
 
 import Foundation
 
-public protocol ViewModelResponder: AnyObject {
-    var next: ViewModelResponder? { get set }
+public protocol ViewModelResponder {
+    var next: Storage<ViewModelResponder>? { get set }
     
     func setAsNextResponder(_ responder: ViewModelResponder)
 }
@@ -19,9 +19,9 @@ fileprivate struct AssociatedKey {
 }
 
 public extension ViewModelResponder {
-    var next: ViewModelResponder? {
+    var next: Storage<ViewModelResponder>? {
         get {
-            objc_getAssociatedObject(self, &AssociatedKey.kNext) as? ViewModelResponder
+            objc_getAssociatedObject(self, &AssociatedKey.kNext) as? Storage<ViewModelResponder>
         }
         
         set {
@@ -50,9 +50,21 @@ public extension ViewModelResponder {
                 return target
             }
             
-            parent = parent?.next
+            parent = (parent?.obj as? ViewModelResponder)?.next
         }
         
         return nil
+    }
+}
+
+public class Storage<T> {
+    private(set) var obj: T
+    
+    public init(_ obj: T) {
+        self.obj = obj
+    }
+    
+    public func store(_ obj: T) {
+        self.obj = obj
     }
 }

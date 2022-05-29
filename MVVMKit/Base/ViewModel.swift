@@ -12,7 +12,7 @@ public protocol ViewModel: ViewModelResponder {
 public extension ViewModel {
     func setup() {}
 	
-	func setAsNextResponder(_ responder: ViewModelResponder) {
-		next = responder
+    func setAsNextResponder(_ responder: ViewModelResponder) {
+        next?.store(responder)
 	}
 }

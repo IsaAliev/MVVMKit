@@ -11,7 +11,7 @@ import Foundation
 import MVVMKit_Base
 #endif
 
-public protocol RxFlowCoordinator: ViewModelResponder {
+public protocol RxFlowCoordinator: AnyObject, ViewModelResponder {
     associatedtype CoordinationOutput
     
     var bag: DisposeBag { get }
@@ -48,7 +48,7 @@ private class AbstractFlowCoordinator<T>: RxFlowCoordinator {
     }
     
     func setAsNextResponder(_ responder: ViewModelResponder) {
-        next = responder
+        next?.store(responder)
     }
     
     func start() {
