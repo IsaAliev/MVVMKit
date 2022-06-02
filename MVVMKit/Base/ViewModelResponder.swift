@@ -21,7 +21,14 @@ fileprivate struct AssociatedKey {
 public extension ViewModelResponder {
     var next: Storage<ViewModelResponder>? {
         get {
-            objc_getAssociatedObject(self, &AssociatedKey.kNext) as? Storage<ViewModelResponder>
+            if let storage = objc_getAssociatedObject(self, &AssociatedKey.kNext) as? Storage<ViewModelResponder> {
+                return storage
+            }
+            
+            let storage = Storage<ViewModelResponder>()
+            objc_setAssociatedObject(self, &AssociatedKey.kNext, storage, .OBJC_ASSOCIATION_ASSIGN)
+            
+            return storage
         }
         
         set {
@@ -58,9 +65,9 @@ public extension ViewModelResponder {
 }
 
 public class Storage<T> {
-    private(set) var obj: T
+    private(set) var obj: T?
     
-    public init(_ obj: T) {
+    public init(_ obj: T? = nil) {
         self.obj = obj
     }
     
