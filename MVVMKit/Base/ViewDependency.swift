@@ -5,6 +5,12 @@
 //  Copyright © 2020. All rights reserved.
 //
 
+/**
+ Describes dependency between view model and it's ui representation
+ 
+ Instances of this struct are used to make registrations on UITableView/UICollectionView
+ */
+
 public struct ViewDependency: ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     

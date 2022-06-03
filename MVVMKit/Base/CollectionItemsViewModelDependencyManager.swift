@@ -8,11 +8,31 @@
 import Foundation
 import UIKit
 
+/**
+ A protocol that is adopted to provide binder with proper reuse identifier for a particular view model
+ */
+
 public protocol CollectionItemsViewModelDependencyManager {
+    /**
+        Dependencies that will be installed on UICollectionView/UITableView
+     */
     var dependencies: [ViewDependency] { get }
     
+    /**
+        Default implementation of reuseIdentifier(for:) uses this method providing it with a view model's type's name to resolve reuse identifier for it
+        
+        Default implementation returns fullTypeName without "Model" suffix adopting View-ViewModel name convention, where View's class name is used as reuse identifier
+     */
     func mapModelTypeNameToIdentifier(_ fullTypeName: String) -> String
+    
+    /**
+        This method is directly used by binder to resolve reuse identifier for a view model
+     */
     func reuseIdentifier(for model: CollectionItemViewModel) -> String
+    
+    /**
+        Default implementation of mapModelTypeNameToIdentifier(:) uses this method in case there is no "Model" suffix in view model's type's name
+     */
     func resolveIdentifier(forModelTypeUsingUnusualNaming fullTypeName: String) -> String
 }
 
@@ -36,6 +56,9 @@ public extension CollectionItemsViewModelDependencyManager {
 }
 
 public extension CollectionItemsViewModelDependencyManager {
+    /**
+        Installs dependencies for view dependency manager on table view
+     */
     func install(on tableView: UITableView) {
         dependencies.forEach({
             guard $0.isCell else {
@@ -57,6 +80,9 @@ public extension CollectionItemsViewModelDependencyManager {
         })
     }
     
+    /**
+        Installs dependencies for view dependency manager on collection view
+     */    
     func install(on collectionView: UICollectionView) {
         dependencies.forEach({
             guard $0.isCell else {

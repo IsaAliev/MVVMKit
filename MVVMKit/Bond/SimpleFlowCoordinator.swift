@@ -25,8 +25,4 @@ open class SimpleFlowCoordinator<O>: FlowCoordinator {
     open func start() {
         
     }
-    
-    public func setAsNextResponder(_ responder: ViewModelResponder) {
-        next = responder
-    }
 }

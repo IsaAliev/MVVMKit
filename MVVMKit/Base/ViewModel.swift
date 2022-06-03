@@ -5,14 +5,10 @@
 //  Copyright © 2020. All rights reserved.
 //
 
-public protocol ViewModel: ViewModelResponder {
+public protocol ViewModel {
     func setup()
 }
 
 public extension ViewModel {
     func setup() {}
-	
-	func setAsNextResponder(_ responder: ViewModelResponder) {
-		next = responder
-	}
 }
