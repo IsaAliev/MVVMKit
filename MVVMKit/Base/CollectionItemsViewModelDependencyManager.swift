@@ -62,18 +62,22 @@ public extension CollectionItemsViewModelDependencyManager {
     func install(on tableView: UITableView) {
         dependencies.forEach({
             guard $0.isCell else {
+                guard $0.classType.isSubclass(of: UITableViewHeaderFooterView.self) else { return }
+                
                 tableView.register($0.classType, forHeaderFooterViewReuseIdentifier: $0.identifier)
                 return
             }
+            
+            guard $0.classType.isSubclass(of: UITableViewCell.self) else { return }
             
             tableView.register(
                 $0.classType,
                 forCellReuseIdentifier: $0.identifier
             )
             
-            if $0.withNib {
+            if let nibName = $0.nibName {
                 tableView.register(
-                    UINib(nibName: $0.nibName, bundle: nil),
+                    UINib(nibName: nibName, bundle: nil),
                     forCellReuseIdentifier: $0.identifier
                 )
             }
@@ -86,23 +90,27 @@ public extension CollectionItemsViewModelDependencyManager {
     func install(on collectionView: UICollectionView) {
         dependencies.forEach({
             guard $0.isCell else {
+                guard $0.classType.isSubclass(of: UICollectionReusableView.self) else { return }
+                
                 collectionView.register(
                     $0.classType,
-                    forSupplementaryViewOfKind: $0.kind,
+                    forSupplementaryViewOfKind: $0.kind!,
                     withReuseIdentifier: $0.identifier
                 )
                 
                 return
             }
             
+            guard $0.classType.isSubclass(of: UICollectionViewCell.self) else { return }
+            
             collectionView.register(
                 $0.classType,
                 forCellWithReuseIdentifier: $0.identifier
             )
             
-            if $0.withNib {
+            if let nibName = $0.nibName {
                 collectionView.register(
-                    UINib(nibName: $0.nibName, bundle: nil),
+                    UINib(nibName: nibName, bundle: nil),
                     forCellWithReuseIdentifier: $0.identifier
                 )
             }

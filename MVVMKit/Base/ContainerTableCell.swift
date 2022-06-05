@@ -8,13 +8,15 @@
 import SnapKit
 import UIKit
 
-public class ContainerTableCell<T: UIView & ViewRepresentable>:
+/**
+ Container that is used inside UITableView. Must be provided with content view's type and content insets provider type
+ */
+
+open class ContainerTableCell<T: UIView & ViewRepresentable, I: ContentInsetsProvider>:
     UITableViewCell,
     ViewRepresentable,
-    BoundingWidthAdoptable,
     CollectionItemsViewDependenciesContainable
 {
-    private var widthConstraint: Constraint?
     public lazy var content: T = {
         T(frame: .zero)
     }()
@@ -23,14 +25,20 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
         content.isFirstResponder
     }
     
+    open override var canBecomeFirstResponder: Bool {
+        content.canBecomeFirstResponder
+    }
+    
+    open override var canResignFirstResponder: Bool {
+        content.canResignFirstResponder
+    }
+    
     public override var isHighlighted: Bool {
-        didSet {
-            content.subviewAdopting(CellStatesHandling.self)?.isHighlighted = isHighlighted
-        }
+        didSet { to(CellStatesHandling.self)?.isHighlighted = isHighlighted }
     }
     
     public override var isSelected: Bool {
-        didSet { content.subviewAdopting(CellStatesHandling.self)?.isSelected = isSelected }
+        didSet { to(CellStatesHandling.self)?.isSelected = isSelected }
     }
     
     public var typeErasedViewModel: ViewModel? {
@@ -39,8 +47,8 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
     }
     
     public var itemsDependencyManager: CollectionItemsViewModelDependencyManager? {
-        get { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
-        set { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
+        get { to(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
+        set { to(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
     }
     
     public var model: NotAModel!
@@ -51,33 +59,50 @@ public class ContainerTableCell<T: UIView & ViewRepresentable>:
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public func bindWithModel() { }
     
-    public func adoptBoundingWidth(_ width: CGFloat) {
-        widthConstraint?.update(offset: width)
-        widthConstraint?.activate()
-    }
-    
     private func setupViews() {
-        selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
         contentView.addSubview(content)
         
         content.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            widthConstraint = make.width.equalTo(0.0).constraint
+            make.edges.equalToSuperview().inset(I.insets)
         }
         
-        widthConstraint?.deactivate()
+        to(EmbeddableView.self)?.didEmbedTo(self)
+    }
+    
+    public override func becomeFirstResponder() -> Bool {
+        content.becomeFirstResponder()
+    }
+    
+    public override func resignFirstResponder() -> Bool {
+        content.resignFirstResponder()
+    }
+    
+    open override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        to(CellStatesHandling.self)?.setSelected(selected, animated: animated)
+    }
+
+    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+
+        to(CellStatesHandling.self)?.setHighlighted(highlighted, animated: animated)
     }
     
     public override func prepareForReuse() {
         super.prepareForReuse()
         
-        (content as? ReusableView)?.prepareForReuse()
+        to(ReusableView.self)?.prepareForReuse()
+    }
+    
+    private func to<P>(_ type: P.Type) -> P? {
+        content.subviewAdopting(type)
     }
 }
 
@@ -94,6 +119,6 @@ extension ContainerTableCell: ContentConstraintsConfigurable {
     }
     
     public func makeConstraints(_ configurator: (ConstraintMaker) -> Void) {
-        contentView.snp.remakeConstraints(configurator)
+        content.snp.remakeConstraints(configurator)
     }
 }

@@ -11,73 +11,46 @@
  Instances of this struct are used to make registrations on UITableView/UICollectionView
  */
 
-public struct ViewDependency: ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
+public struct ViewDependency {
     
-    var nibName: String
+    /**
+        The name of .nib file of a view
+     */
+    public var nibName: String?
+    
+    /**
+     Reuse identifier that is used to register a class
+     */
     public var identifier: String
-    var classType: AnyClass
-    var withNib = true
-    var isCell = true
-    var kind = ""
-    public var modelName = ""
     
-    public init(stringLiteral value: String) {
-        classType = swiftClassFromString(value)!
-        identifier = value
-        nibName = value
-        withNib = false
-    }
+    /**
+     A view class type to be registered
+     */
+    public var classType: AnyClass
     
-    public init(_ className: String, viewKind: String) {
-        isCell = false
-        kind = viewKind
-        identifier = className
-        classType = swiftClassFromString(className)!
-        self.identifier = className
-        nibName = ""
-    }
+    /**
+     A view kind. For example, UICollectionView.elementKindSectionHeader
+     */
+    public var kind: String?
     
-    public init(_ className: String, viewKind: String, for identifier: String) {
-        isCell = false
-        kind = viewKind
-        classType = swiftClassFromString(className)!
-        self.identifier = identifier
-        nibName = ""
-    }
+    /**
+     Explicitly set view model's name. May be useful if view-viewModel naming convention is not respected
+     */
+    public var modelName: String?
     
-    public init(_ id: String, withNib: Bool = true) {
-        classType = swiftClassFromString(id)!
-        identifier = id
-        nibName = id
-        self.withNib = withNib
-    }
+    internal var isCell: Bool { kind == nil }
     
-    public init(_ className: String, identifier: String) {
-        self.init(identifier)
-        classType = swiftClassFromString(className)!
-    }
-    
-    public init(_ className: String, identifier: String, nibName: String) {
-        classType = swiftClassFromString(className)!
-        self.identifier = identifier
-        self.nibName = nibName
-    }
-    
-    public init(_ classType: AnyClass, identifier: String, kind: String = "") {
+    public init(
+        _ classType: AnyClass,
+        identifier: String,
+        nibName: String? = nil,
+        viewKind: String? = nil,
+        modelName: String? = nil
+    ) {
         self.classType = classType
         self.identifier = identifier
-        self.nibName = ""
-        self.kind = kind
-        self.withNib = false
-        isCell = kind.isEmpty
-    }
-    
-    public init(_ cellClassName: String, modelName: String) {
+        self.nibName = nibName
+        self.kind = viewKind
         self.modelName = modelName
-        self.classType = swiftClassFromString(cellClassName)!
-        identifier = cellClassName
-        nibName = cellClassName
-        withNib = false
     }
 }

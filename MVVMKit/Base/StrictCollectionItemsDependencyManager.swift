@@ -7,6 +7,10 @@
 
 import UIKit
 
+/**
+ Concrete implementation of CollectionItemsViewModelDependencyManager that assumes that view-viewModel convention is respected or modelName property of ViewDependency is set for unusual naming.
+ */
+
 public struct StrictCollectionItemsDependencyManager: CollectionItemsViewModelDependencyManager {
     public let dependencies: [ViewDependency]
     

@@ -5,6 +5,9 @@
 //  Copyright © 2020. All rights reserved.
 //
 
+/**
+ A protocol that is adopted by any view
+ */
 public protocol ViewRepresentable: ViewModelTypeErasedViewRepresentable {
     associatedtype ViewModelType: ViewModel
     

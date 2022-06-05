@@ -8,37 +8,11 @@
 import SnapKit
 import UIKit
 
-public protocol BoundingWidthAdoptable {
-    func adoptBoundingWidth(_ width: CGFloat)
-}
+/**
+ Container that is used inside UICollectionView. Must be provided with content view's type and content insets provider type
+ */
 
-public protocol AttributesApplyable {
-	func apply(_ layoutAttributes: UICollectionViewLayoutAttributes)
-}
-
-public protocol CellStatesHandling: AnyObject {
-	var isHighlighted: Bool { get set }
-	var isSelected: Bool { get set }
-	var selectedBackgroundView: UIView? { get }
-}
-
-public extension CellStatesHandling {
-	var selectedBackgroundView: UIView? { nil }
-}
-
-public protocol ContentConstraintsConfigurable {
-    func makeContentPinToEdges()
-    func makeContentCenterByY()
-    func makeConstraints(_ configurator: (ConstraintMaker) -> Void)
-}
-
-public protocol ReusableView {
-    func prepareForReuse()
-}
-
-public class NotAModel: ViewModel { }
-
-open class ContainerCell<T: UIView & ViewRepresentable>:
+open class ContainerCell<T: UIView & ViewRepresentable, I: ContentInsetsProvider>:
     UICollectionViewCell,
     ViewRepresentable,
     BoundingWidthAdoptable,
@@ -50,8 +24,8 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
     }()
     
     public var itemsDependencyManager: CollectionItemsViewModelDependencyManager? {
-        get { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
-        set { content.subviewAdopting(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
+        get { to(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager }
+        set { to(CollectionItemsViewDependenciesContainable.self)?.itemsDependencyManager = newValue }
     }
     
     open var typeErasedViewModel: ViewModel? {
@@ -63,14 +37,20 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
 		content.isFirstResponder
 	}
     
+    open override var canBecomeFirstResponder: Bool {
+        content.canBecomeFirstResponder
+    }
+    
+    open override var canResignFirstResponder: Bool {
+        content.canResignFirstResponder
+    }
+    
 	public override var isHighlighted: Bool {
-		didSet {
-			content.subviewAdopting(CellStatesHandling.self)?.isHighlighted = isHighlighted
-		}
+		didSet { to(CellStatesHandling.self)?.isHighlighted = isHighlighted }
 	}
 	
 	public override var isSelected: Bool {
-		didSet { content.subviewAdopting(CellStatesHandling.self)?.isSelected = isSelected }
+		didSet { to(CellStatesHandling.self)?.isSelected = isSelected }
 	}
 	
     public var model: NotAModel!
@@ -96,8 +76,11 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
 		content.becomeFirstResponder()
 	}
     
+    open override func resignFirstResponder() -> Bool {
+        content.resignFirstResponder()
+    }
+    
     private func setupViews() {
-		selectedBackgroundView = content.subviewAdopting(CellStatesHandling.self)?.selectedBackgroundView
         contentView.addSubview(content)
         
 		setupContentConstraints { w in
@@ -105,11 +88,13 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
 		}
         
         widthConstraint?.deactivate()
+        
+        to(EmbeddableView.self)?.didEmbedTo(self)
     }
 	
 	open func setupContentConstraints(_ usingWidthConstraint: (Constraint) -> Void) {
 		content.snp.makeConstraints { make in
-			make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(I.insets)
 			let cons = make.width.equalTo(0.0).constraint
 			usingWidthConstraint(cons)
 		}
@@ -118,29 +103,18 @@ open class ContainerCell<T: UIView & ViewRepresentable>:
     public override func prepareForReuse() {
         super.prepareForReuse()
         
-		content.subviewAdopting(ReusableView.self)?.prepareForReuse()
+		to(ReusableView.self)?.prepareForReuse()
     }
 	
 	open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
 		super.apply(layoutAttributes)
 		
-		content.subviewAdopting(AttributesApplyable.self)?
-			.apply(layoutAttributes)
+		to(AttributesApplyable.self)?.apply(layoutAttributes)
 	}
-}
-
-extension UIView {
-	func subviewAdopting<P>(_ type: P.Type) -> P? {
-		if self as? P != nil { return self as? P }
-		
-		for subview in subviews {
-			if let v = subview.subviewAdopting(type) {
-				return v
-			}
-		}
-		
-		return nil
-	}
+    
+    private func to<P>(_ type: P.Type) -> P? {
+        content.subviewAdopting(type)
+    }
 }
 
 extension ContainerCell: ContentConstraintsConfigurable {
@@ -156,6 +130,6 @@ extension ContainerCell: ContentConstraintsConfigurable {
     }
     
     public func makeConstraints(_ configurator: (ConstraintMaker) -> Void) {
-        contentView.snp.remakeConstraints(configurator)
+        content.snp.remakeConstraints(configurator)
     }
 }

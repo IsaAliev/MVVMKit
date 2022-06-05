@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+ A protocol that is adopted by ViewModel or Coordinator if there is a need to create responder chain
+ */
+
 public protocol ViewModelResponder: AnyObject {
     var next: ViewModelResponder? { get set }
     
@@ -29,6 +33,9 @@ public extension ViewModelResponder {
         }
     }
 	
+    /**
+     Creates a ViewModel and sets caller to be its next responder
+     */
 	func createVM<T: ViewModelResponder>(_ creation: () -> T) -> T {
 		let vm = creation()
 		vm.setAsNextResponder(self)
@@ -42,6 +49,9 @@ public extension ViewModelResponder {
 }
 
 public extension ViewModelResponder {
+    /**
+        Finds first responder in chain that conforms to type
+     */
     func first<T>(of type: T.Type) -> T? {
         var parent = next
         
