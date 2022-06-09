@@ -11,14 +11,6 @@ import UIKit
 import MVVMKit_Base
 #endif
 
-public protocol CellProcessor {
-    func processCell(_ cell: UIView, at path: IndexPath)
-}
-
-public protocol SupplementaryViewProcessor {
-    func processSupplementaryView(_ view: UICollectionReusableView, at path: IndexPath)
-}
-
 open class CollectionBinder<ChangeSet: SectionedDataSourceChangeset>:
     CollectionViewBinderDataSource<ChangeSet>
 where ChangeSet.Collection == Array2D<Section.SectionMeta, CollectionItemViewModel>

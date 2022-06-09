@@ -19,107 +19,66 @@ class EmptyViewModel: IdentifiableCollectionItemViewModel {
     init(id: String? = nil) { explicitId = id }
 }
 
-protocol RxDataSourceProvider {
-    var collectionData: BehaviorSubject<[SectionData]> { get }
-}
-
-protocol RxAnimatableDataSourceProvider {
-    var collectionData: BehaviorSubject<[AnimatableSectionData]> { get }
-}
-
-protocol RxDataSourceRepresentableView: CollectionItemsViewDependenciesContainable {
-    var dataProvider: RxDataSourceProvider! { get }
+public protocol RxDataSourceRepresentableView: CollectionItemsViewDependenciesContainable {
+    var dataProvider: RxSectionedListContaining! { get }
     var disposeBag: DisposeBag { get }
 }
 
-protocol RxAnimatableDataSourceRepresentableView: CollectionItemsViewDependenciesContainable {
-    var dataProvider: RxAnimatableDataSourceProvider! { get }
-    var disposeBag: DisposeBag { get }
-}
-
-extension RxDataSourceRepresentableView {
-    func itemModel(at indexPath: IndexPath) -> CollectionItemViewModel? {
-        guard let data = try? dataProvider.collectionData.value() else {
-            return nil
-        }
-        
-        return data[indexPath.section].items[indexPath.row]
-    }
-}
-
-extension RxAnimatableDataSourceRepresentableView {
-    func configureCollectionDataSource(
-        for collectionView: UICollectionView,
-        withPreReturnHandler preReturnHandler: PreReturnHandler<AnimatableSectionData>? = nil
-    ) {
-        collectionView.dataSource = nil
-        
-        guard let manager = itemsDependencyManager else {
-            return
-        }
-        
-        manager.install(on: collectionView)
-        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionData>
-            .default(with: manager, preReturnHandler: preReturnHandler)
-        
-        dataProvider.collectionData.bind(to: collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+public extension RxDataSourceRepresentableView {
+    func itemModel(at indexPath: IndexPath) -> CollectionItemViewModel {
+        return dataProvider.items.collection.item(at: indexPath)
     }
 }
 
 extension RxDataSourceRepresentableView {
-    func configureCollectionDataSource(
-        for collectionView: UICollectionView,
-        withPreReturnHandler preReturnHandler: PreReturnHandler<SectionData>? = nil
+    public func configureDataSource(
+        for tableView: UITableView,
+        withCellProcessors cellProcessors: [CellProcessor] = [],
+        rowReloadAnimation: UITableView.RowAnimation = .fade,
+        rowDeletionAnimation: UITableView.RowAnimation = .fade,
+        rowInsertionAnimation: UITableView.RowAnimation = .fade
     ) {
-        collectionView.dataSource = nil
-        
-        guard let manager = itemsDependencyManager else {
-            return
-        }
-        
-        manager.install(on: collectionView)
-        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionData>
-            .default(with: manager, preReturnHandler: preReturnHandler)
-        
-        dataProvider.collectionData.bind(to: collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-    }
-}
-
-extension RxDataSourceRepresentableView where Self: UICollectionViewController {
-    func configureCollectionDataSource(
-        withPreReturnHandler preReturnHandler: PreReturnHandler<SectionData>? = nil
-    ) {
-        collectionView.dataSource = nil
-        
-        guard let manager = itemsDependencyManager else {
-            return
-        }
-        
-        manager.install(on: collectionView)
-        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionData>
-            .default(with: manager, preReturnHandler: preReturnHandler)
-        
-        dataProvider.collectionData.bind(to: collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-    }
-}
-
-extension RxDataSourceRepresentableView where Self: UITableViewController {
-    func configureCollectionDataSource() {
         tableView.dataSource = nil
         
-        guard let manager = itemsDependencyManager else {
-            return
-        }
+        guard let manager = itemsDependencyManager else { return }
         
         manager.install(on: tableView)
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionData>.default(with: manager)
         
-        dataProvider.collectionData
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+        dataProvider.itemsDriver
+            .drive(
+                tableView.rx.items(
+                    dataSource: RxTableViewDataSource(
+                        depsManager: manager,
+                        cellProcessors: cellProcessors,
+                        rowReloadAnimation: rowReloadAnimation,
+                        rowDeletionAnimation: rowDeletionAnimation,
+                        rowInsertionAnimation: rowInsertionAnimation
+                    )
+                )
+            )
             .disposed(by: disposeBag)
     }
+    
+    public func configureDataSource(
+        for collectionView: UICollectionView,
+        withCellProcessors cellProcessors: [CellProcessor] = [],
+        andSupplementaryViewProcessors supplementariesProcessors: [SupplementaryViewProcessor] = [],
+        configuration: ((RxCollectionViewDataSource<SectionedArrayChangeset>) -> Void)? = nil
+    ) {
+        collectionView.dataSource = nil
+        
+        guard let manager = itemsDependencyManager else { return }
+        
+        manager.install(on: collectionView)
+        
+        let dataSource = RxCollectionViewDataSource<SectionedArrayChangeset>(
+            depsManager: manager,
+            cellProcessors: cellProcessors,
+            supplementaryViewProcessors: supplementariesProcessors
+        )
+        
+        configuration?(dataSource)
+        
+        dataProvider.itemsDriver.drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+    }
 }
-
