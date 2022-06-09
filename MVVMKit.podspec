@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "MVVMKit"
-  spec.version      = "0.0.12"
+  spec.version      = "0.1.1"
   spec.summary      = "MVVM Architecture Framework"
   spec.description  = <<-DESC
 MVVM Architecture Framework
@@ -25,7 +25,7 @@ MVVM Architecture Framework
 	spec.subspec 'RxSwift' do |sp|
 		sp.dependency "RxSwift"
     sp.dependency "RxDataSources"
-  	sp.source_files = 'MVVMKit/Base/*.{swift}', 'MVVMKit/Rx/*.{swift}'
+  	sp.source_files = 'MVVMKit/Base/*.{swift}', 'MVVMKit/Rx/**/*.{swift}'
 	end
 
 	spec.subspec 'Bond' do |sp|
