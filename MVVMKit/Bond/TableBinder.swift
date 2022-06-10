@@ -19,6 +19,9 @@ where
     private let depsManager: CollectionItemsViewModelDependencyManager
     private let cellProcessors: [CellProcessor]
     
+    public var moveItemFromTo: ((UITableView, IndexPath, IndexPath) -> Void)?
+    public var canMoveItemAt: ((UITableView, IndexPath) -> Bool)?
+    
     public init(
         depsManager: CollectionItemsViewModelDependencyManager,
         cellProcessors: [CellProcessor] = [],
@@ -57,5 +60,22 @@ where
         cellProcessors.forEach({ $0.processCell(cell, at: indexPath) })
         
         return cell
+    }
+    
+    @objc(tableView:canMoveRowAtIndexPath:)
+    public func tableView(
+        _ tableView: UITableView,
+        canMoveRowAt indexPath: IndexPath
+    ) -> Bool {
+        canMoveItemAt?(tableView, indexPath) ?? false
+    }
+    
+    @objc(tableView:moveRowAtIndexPath:toIndexPath:)
+    public func tableView(
+        _ tableView: UITableView,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        moveItemFromTo?(tableView, sourceIndexPath, destinationIndexPath)
     }
 }

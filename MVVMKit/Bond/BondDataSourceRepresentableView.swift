@@ -56,7 +56,8 @@ public extension BondDataSourceRepresentableView {
     
     func configureDataSource(
         for tableView: UITableView,
-        withCellProcessors cellProcessors: [CellProcessor] = []
+        withCellProcessors cellProcessors: [CellProcessor] = [],
+        configuration: ((TableBinder<SectionedArrayChangeset>) -> Void)? = nil
     ) {
         tableView.dataSource = nil
         
@@ -64,12 +65,16 @@ public extension BondDataSourceRepresentableView {
         
         manager.install(on: tableView)
         
+        let binder = TableBinder<SectionedArrayChangeset>(
+            depsManager: manager,
+            cellProcessors: cellProcessors
+        )
+        
+        configuration?(binder)
+        
         dataProvider.items.bind(
             to: tableView,
-            using: TableBinder(
-                depsManager: manager,
-                cellProcessors: cellProcessors
-            )
+            using: binder
         ).dispose(in: bag)
     }
 }

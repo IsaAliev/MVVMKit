@@ -36,7 +36,8 @@ extension RxDataSourceRepresentableView {
         withCellProcessors cellProcessors: [CellProcessor] = [],
         rowReloadAnimation: UITableView.RowAnimation = .fade,
         rowDeletionAnimation: UITableView.RowAnimation = .fade,
-        rowInsertionAnimation: UITableView.RowAnimation = .fade
+        rowInsertionAnimation: UITableView.RowAnimation = .fade,
+        configuration: ((RxTableViewDataSource<SectionedArrayChangeset>) -> Void)? = nil
     ) {
         tableView.dataSource = nil
         
@@ -44,16 +45,20 @@ extension RxDataSourceRepresentableView {
         
         manager.install(on: tableView)
         
-        dataProvider.itemsDriver
+        let dataSource = RxTableViewDataSource<SectionedArrayChangeset>(
+            depsManager: manager,
+            cellProcessors: cellProcessors,
+            rowReloadAnimation: rowReloadAnimation,
+            rowDeletionAnimation: rowDeletionAnimation,
+            rowInsertionAnimation: rowInsertionAnimation
+        )
+        
+        configuration?(dataSource)
+        
+        dataProvider.itemsDriver.debug()
             .drive(
                 tableView.rx.items(
-                    dataSource: RxTableViewDataSource(
-                        depsManager: manager,
-                        cellProcessors: cellProcessors,
-                        rowReloadAnimation: rowReloadAnimation,
-                        rowDeletionAnimation: rowDeletionAnimation,
-                        rowInsertionAnimation: rowInsertionAnimation
-                    )
+                    dataSource: dataSource
                 )
             )
             .disposed(by: disposeBag)

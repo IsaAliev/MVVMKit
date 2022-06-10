@@ -28,6 +28,9 @@ public class RxTableViewDataSource<E: SectionedDataSourceChangeset>:
     private let rowDeletionAnimation: UITableView.RowAnimation
     private let rowInsertionAnimation: UITableView.RowAnimation
     
+    public var moveItemFromTo: ((UITableView, IndexPath, IndexPath) -> Void)?
+    public var canMoveItemAt: ((UITableView, IndexPath) -> Bool)?
+    
     public init(
         depsManager: CollectionItemsViewModelDependencyManager,
         cellProcessors: [CellProcessor] = [],
@@ -68,6 +71,21 @@ public class RxTableViewDataSource<E: SectionedDataSourceChangeset>:
     
     public func numberOfSections(in tableView: UITableView) -> Int {
         changeset?.collection.numberOfSections ?? .zero
+    }
+    
+    public func tableView(
+        _ tableView: UITableView,
+        canMoveRowAt indexPath: IndexPath
+    ) -> Bool {
+        canMoveItemAt?(tableView, indexPath) ?? false
+    }
+    
+    public func tableView(
+        _ tableView: UITableView,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        moveItemFromTo?(tableView, sourceIndexPath, destinationIndexPath)
     }
     
     public func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
