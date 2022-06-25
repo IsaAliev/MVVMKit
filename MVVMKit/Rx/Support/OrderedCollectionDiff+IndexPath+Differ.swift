@@ -24,23 +24,6 @@
 
 import Foundation
 import Differ
-import ReactiveKit
-
-extension SignalProtocol where Element: TreeProtocol {
-
-    /// Diff each next element (tree node) against the previous one and emit a diff event.
-    public func diff(_ areEqual: @escaping (Element.Children.Element, Element.Children.Element) -> Bool) -> Signal<TreeChangeset<Element>, Error> {
-        return diff(generateDiff: { c1, c2 in c1.diff(c2, areEqual: areEqual) })
-    }
-}
-
-extension SignalProtocol where Element: TreeProtocol, Element.Children.Element: Equatable {
-
-    /// Diff each next element (tree node) against the previous one and emit a diff event.
-    public func diff() -> Signal<TreeChangeset<Element>, Error> {
-        return diff(generateDiff: { c1, c2 in c1.diff(c2, areEqual: ==) })
-    }
-}
 
 extension MutableChangesetContainerProtocol where Changeset: TreeChangesetProtocol {
 

@@ -22,7 +22,7 @@ extension BehaviorSubject: ChangesetContainerProtocol, MutableChangesetContainer
     }
     
     public func batchUpdate(_ update: (BehaviorSubject<Element>) -> Void) {
-        let lock = NSRecursiveLock(name: "Property.CollectionChangeset.batchUpdate")
+        let lock = NSRecursiveLock.init()
         
         guard let val = try? value() else { return }
         

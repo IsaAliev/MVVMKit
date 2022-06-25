@@ -24,7 +24,6 @@
 
 import Foundation
 import Differ
-import ReactiveKit
 
 extension OrderedCollectionDiff where Index == Int {
 
@@ -40,22 +39,6 @@ extension OrderedCollectionDiff where Index == Int {
                 moves.append((from: from, to: to))
             }
         }
-    }
-}
-
-extension SignalProtocol where Element: Collection, Element.Index == Int {
-
-    /// Diff each next element (array) against the previous one and emit a diff event.
-    public func diff(_ areEqual: @escaping (Element.Element, Element.Element) -> Bool) -> Signal<OrderedCollectionChangeset<Element>, Error> {
-        return diff(generateDiff: { c1, c2 in OrderedCollectionDiff<Int>(from: c1.extendedDiff(c2, isEqual: areEqual)) })
-    }
-}
-
-extension SignalProtocol where Element: Collection, Element.Element: Equatable, Element.Index == Int {
-
-    /// Diff each next element (array) against the previous one and emit a diff event.
-    public func diff() -> Signal<OrderedCollectionChangeset<Element>, Error> {
-        return diff(generateDiff: { c1, c2 in OrderedCollectionDiff<Int>(from: c1.extendedDiff(c2)) })
     }
 }
 
