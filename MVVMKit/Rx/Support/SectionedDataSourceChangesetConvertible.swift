@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import ReactiveKit
 
 /// A data source (a collection) that whose data (items) are grouped into sections.
 public protocol SectionedDataSourceProtocol {

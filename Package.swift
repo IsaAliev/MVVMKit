@@ -20,7 +20,8 @@ let package = Package(
 		.package(name: "SnapKit", url: "https://github.com/SnapKit/SnapKit", from: "5.0.1"),
 		.package(name: "Bond", url: "https://github.com/DeclarativeHub/Bond", from: "7.8.0"),
 		.package(name: "RxSwift", url: "https://github.com/ReactiveX/RxSwift", from: "6.2.0"),
-		.package(name: "RxDataSources", url: "https://github.com/RxSwiftCommunity/RxDataSources", from: "5.0.0")
+		.package(name: "RxDataSources", url: "https://github.com/RxSwiftCommunity/RxDataSources", from: "5.0.0"),
+        .package(name: "Differ", url: "https://github.com/tonyarnold/Differ", from: "1.4.6")
 	],
     targets: [
         .target(
@@ -43,7 +44,8 @@ let package = Package(
 			dependencies: [
 				"MVVMKit_Base",
 				.product(name: "RxSwift", package: "RxSwift"),
-				.product(name: "RxDataSources", package: "RxDataSources")
+				.product(name: "RxDataSources", package: "RxDataSources"),
+                .product(name: "Differ", package: "Differ")
 			],
 			path: "MVVMKit/Rx"
 		)

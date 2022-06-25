@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import ReactiveKit
 
 /// A type that contains or wraps a changeset.
 public protocol ChangesetContainerProtocol: class {
@@ -138,14 +137,5 @@ extension ChangesetContainerProtocol where Changeset.Collection: TreeProtocol {
         get {
             return collection[childAt: indexPath]
         }
-    }
-}
-
-extension SignalProtocol where Error == Never {
-
-    /// Bind the collection signal to the given changeset container like MutableObervableArray.
-    @discardableResult
-    public func bind<C: ChangesetContainerProtocol>(to changesetContainer: C) -> Disposable where C: BindableProtocol, C.Element == C.Changeset, C.Changeset.Collection == Element {
-        return map { C.Changeset(collection: $0, diff: .init()) }.bind(to: changesetContainer)
     }
 }
