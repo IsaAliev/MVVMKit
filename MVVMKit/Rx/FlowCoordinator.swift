@@ -5,8 +5,7 @@
 //  Copyright © 2020. All rights reserved.
 //
 
-import ReactiveKit
-import Bond
+import RxSwift
 import Foundation
 #if canImport(MVVMKit_Base)
 import MVVMKit_Base
@@ -18,7 +17,7 @@ public protocol FlowCoordinator: ViewModelResponder {
     var bag: DisposeBag { get }
     var id: UUID { get }
     var children: [UUID: any FlowCoordinator] { get set }
-    var output: Observable<CoordinationOutput?> { get }
+    var output: PublishSubject<CoordinationOutput?> { get }
     
     func start()
 }
@@ -33,13 +32,13 @@ public extension FlowCoordinator {
     }
     
     @discardableResult
-    func coordinate<F: FlowCoordinator, O>(to coordinator: F) -> SafeSignal<O?> where F.CoordinationOutput == O {
+    func coordinate<F: FlowCoordinator, O>(to coordinator: F) -> Observable<O?> where F.CoordinationOutput == O {
         coordinator.setAsNextResponder(self)
         store(coordinator)
         coordinator.start()
         
         return coordinator.output
-            .handleEvents(receiveCompletion: { [weak self, weak coordinator] _ in
+            .do(onNext: { [weak self, weak coordinator] _ in
                 guard let coordinator = coordinator else { return }
                 
                 self?.releaseCoordinator(coordinator)
@@ -47,8 +46,8 @@ public extension FlowCoordinator {
     }
     
     func finishWithOutput(_ output: CoordinationOutput?) {
-        self.output.send(output)
-        self.output.send(completion: .finished)
+        self.output.on(.next(output))
+        self.output.onCompleted()
     }
     
     func childWith(_ id: UUID) -> (any FlowCoordinator)? {
