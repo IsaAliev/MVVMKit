@@ -55,7 +55,7 @@ extension RxDataSourceRepresentableView {
         
         configuration?(dataSource)
         
-        dataProvider.itemsDriver.debug()
+        dataProvider.itemsDriver
             .drive(
                 tableView.rx.items(
                     dataSource: dataSource
