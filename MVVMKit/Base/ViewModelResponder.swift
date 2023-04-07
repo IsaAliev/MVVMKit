@@ -22,14 +22,21 @@ fileprivate struct AssociatedKey {
     static var kNext = "kNext"
 }
 
+class WeakObjectContainer<A: AnyObject>: NSObject {
+    weak var obj: A?
+}
+
 public extension ViewModelResponder {
     var next: ViewModelResponder? {
         get {
-            objc_getAssociatedObject(self, &AssociatedKey.kNext) as? ViewModelResponder
+            (objc_getAssociatedObject(self, &AssociatedKey.kNext) as? WeakObjectContainer<Self>)?.obj
         }
         
         set {
-            objc_setAssociatedObject(self, &AssociatedKey.kNext, newValue, .OBJC_ASSOCIATION_ASSIGN)
+            let c = WeakObjectContainer<Self>()
+            c.obj = newValue as? Self
+            
+            objc_setAssociatedObject(self, &AssociatedKey.kNext, c, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 	
