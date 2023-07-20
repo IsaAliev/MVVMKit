@@ -7,7 +7,7 @@
 
 import RxSwift
 
-final class ClosureCommand<T>: RxCommand {
+public class ClosureCommand<T>: RxCommand {
     typealias Element = T
     
     private var closure: (T) -> Void
