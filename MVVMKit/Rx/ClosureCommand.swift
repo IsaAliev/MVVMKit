@@ -8,7 +8,7 @@
 import RxSwift
 
 public class ClosureCommand<T>: RxCommand {
-    typealias Element = T
+    public typealias Element = T
     
     private var closure: (T) -> Void
     
@@ -18,7 +18,7 @@ public class ClosureCommand<T>: RxCommand {
         self.closure = closure
     }
     
-    func execute(with element: T) {
+    public func execute(with element: T) {
         currentValue = element
         
         closure(element)
