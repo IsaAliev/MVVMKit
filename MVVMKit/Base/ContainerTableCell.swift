@@ -65,7 +65,7 @@ open class ContainerTableCell<T: UIView & ViewRepresentable, I: ContentInsetsPro
     
     public func bindWithModel() { }
     
-    private func setupViews() {
+    open func setupViews() {
         contentView.addSubview(content)
         
         content.snp.makeConstraints { make in
