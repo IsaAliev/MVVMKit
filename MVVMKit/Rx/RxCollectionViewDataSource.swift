@@ -131,8 +131,16 @@ public class RxCollectionViewDataSource<E: SectionedDataSourceChangeset>:
         
         switch observedEvent {
         case let .next(change):
-            self.changeset = change
-            applyChangeset(change)
+            
+            let diff = change.diff.asOrderedCollectionDiff.map { $0.asSectionDataIndexPath }
+            
+            if diff.isEmpty || diff.count == 1 {
+                self.changeset = change
+                applyChangeset(change)
+            } else {
+                applyChangeset(change)
+            }
+            
             break
         default: break
         }
@@ -148,8 +156,9 @@ public class RxCollectionViewDataSource<E: SectionedDataSourceChangeset>:
         } else if diff.count == 1 {
             applyChangesetDiff(diff)
         } else {
-            collectionView.performBatchUpdates({
-                applyChangesetDiff(diff)
+            collectionView.performBatchUpdates({ [weak self] in
+                self?.changeset = changeset
+                self?.applyChangesetDiff(diff)
             }, completion: nil)
         }
         ensureCollectionViewSyncsWithTheDataSource()
