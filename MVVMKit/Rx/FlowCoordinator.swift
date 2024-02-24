@@ -38,7 +38,7 @@ public extension FlowCoordinator {
         coordinator.start()
         
         return coordinator.output
-            .do(onNext: { [weak self, weak coordinator] _ in
+            .do(onCompleted: { [weak self, weak coordinator] in
                 guard let coordinator = coordinator else { return }
                 
                 self?.releaseCoordinator(coordinator)
